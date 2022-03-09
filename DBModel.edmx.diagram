@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b980ddd19f4446e6b83df8d34cb274d5" Name="Diagram1">
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.Agent" Width="1.5" PointX="3" PointY="10.25" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.AgentPriorityHistory" Width="1.5" PointX="5.25" PointY="9.625" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.AgentType" Width="1.5" PointX="0.75" PointY="11.375" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.Material" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.MaterialCountHistory" Width="1.5" PointX="5.25" PointY="15.375" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.MaterialType" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.Product" Width="1.5" PointX="3" PointY="5.875" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.ProductCostHistory" Width="1.5" PointX="5.25" PointY="12.5" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.ProductMaterial" Width="1.5" PointX="5.25" PointY="6.625" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.ProductSale" Width="1.5" PointX="5.25" PointY="3.375" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.ProductType" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.Shop" Width="1.5" PointX="5.25" PointY="21.875" />
+        <EntityTypeShape EntityType="PMayorovMaterialsDemoModel.Supplier" Width="1.5" PointX="5.25" PointY="18.125" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_Agent_AgentType" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_AgentPriorityHistory_Agent" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_ProductSale_Agent" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_Shop_Agent" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_Material_MaterialType" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_MaterialCountHistory_Material" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_ProductMaterial_Material" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_Product_ProductType" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_ProductCostHistory_Product" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_ProductMaterial_Product" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.FK_ProductSale_Product" />
+        <AssociationConnector Association="PMayorovMaterialsDemoModel.MaterialSupplier" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
