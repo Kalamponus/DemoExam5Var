@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Classes\DBConnection.cs" />
     <Compile Include="Classes\MaterialsPartials.cs" />
+    <Compile Include="Classes\PageWorks.cs" />
     <Compile Include="DBModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -113,6 +114,9 @@
     <Compile Include="Supplier.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Windows\WindMaterialRedact.xaml.cs">
+      <DependentUpon>WindMaterialRedact.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -137,6 +141,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\PgMaterialOutput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WindMaterialRedact.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

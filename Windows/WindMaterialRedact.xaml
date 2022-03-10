@@ -1,0 +1,42 @@
+﻿<Window x:Class="DemoExam5Var.WindMaterialRedact"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoExam5Var"
+        mc:Ignorable="d"
+        Title="WindMaterialRedact" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <GroupBox Header="Название">
+                <TextBox x:Name="tbTitle"/>
+            </GroupBox>
+            <GroupBox Header="Тип материала">
+                <ComboBox x:Name="cbMaterialType" SelectedIndex="{Binding MaterialType.ID}"/>
+            </GroupBox>
+            <GroupBox Header="Количество в упаковке">
+                <TextBox x:Name="tbCountInPack"/>
+            </GroupBox>
+            <GroupBox Header="Единица измерения">
+                <TextBox x:Name="tbUnit"/>
+            </GroupBox>
+            <GroupBox Header="Остаток на складе">
+                <TextBox x:Name="tbCountInStock"/>
+            </GroupBox>
+            <GroupBox Header="Минимальное количество">
+                <TextBox x:Name="tbMinCount"/>
+            </GroupBox>
+            <GroupBox Header="Описание">
+                <TextBox x:Name="tbDescription"/>
+            </GroupBox>
+            <GroupBox Header="Стоимость">
+                <TextBox x:Name="tbCost"/>
+            </GroupBox>
+            <GroupBox Header="Изображение">
+                <TextBox x:Name="tbImage"/>
+            </GroupBox>
+            
+        </StackPanel>
+        
+    </Grid>
+</Window>

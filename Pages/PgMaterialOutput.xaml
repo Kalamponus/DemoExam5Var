@@ -35,22 +35,31 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
             <RowDefinition/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Height="Auto" Orientation="Horizontal" VerticalAlignment="Center">
-            <TextBox Width="280" Height="40"/>
-            <ComboBox x:Name="cbSort" Width="200" Margin="50 0" SelectionChanged="Filters">
+            <TextBox x:Name="tbSearch" Width="280" Height="40" TextChanged="tbSearch_TextChanged"/>
+            <ComboBox x:Name="cbSort" Width="200" Margin="50 0" SelectionChanged="cbChanged">
                 <ComboBoxItem>Без сортировки</ComboBoxItem>
-                <ComboBoxItem>По возрастанию</ComboBoxItem>
-                <ComboBoxItem>По убыванию</ComboBoxItem>
-                <ComboBoxItem>По наименованию</ComboBoxItem>
-                <ComboBoxItem>По остатку на складе</ComboBoxItem>
-                <ComboBoxItem>По стоимости</ComboBoxItem>
+                <ComboBoxItem>По наименованию (по возрастанию)</ComboBoxItem>
+                <ComboBoxItem>По наименованию (по убыванию)</ComboBoxItem>
+                <ComboBoxItem>По остатку на складе (по возрастанию)</ComboBoxItem>
+                <ComboBoxItem>По остатку на складе (по убыванию)</ComboBoxItem>
+                <ComboBoxItem>По стоимости (по возрастанию)</ComboBoxItem>
+                <ComboBoxItem>По стоимости (по убыванию)</ComboBoxItem>
             </ComboBox>
-            <ComboBox x:Name="cbFilter" Width="200" SelectionChanged="Filters"/>
+            <ComboBox x:Name="cbFilter" Width="200" SelectionChanged="cbChanged"/>
         </StackPanel>
-        <DockPanel  Grid.Row="1" Height="Auto">
-            <ListBox x:Name="lbMaterials" ItemTemplate="{StaticResource Materials}"/>
+        <DockPanel  Grid.Row="1" Height="Auto"> 
+            <ListBox x:Name="lbMaterials" ItemTemplate="{StaticResource Materials}" SelectionChanged="lbMaterials_SelectionChanged"/>
         </DockPanel>
-        
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="2" HorizontalAlignment="Right">
+            <TextBlock x:Name="tblPrev" Text="&lt;"/>
+            <TextBlock x:Name="tblFirstPage"/>
+            <TextBlock x:Name="tblSecondPage"/>
+            <TextBlock x:Name="tblThirdPage"/>
+            <TextBlock x:Name="tblFourthPage"/>
+            <TextBlock x:Name="tblNext" Text=">"/>
+        </StackPanel>
     </Grid>
 </Page>
