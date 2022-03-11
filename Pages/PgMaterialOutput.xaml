@@ -50,9 +50,10 @@
             </ComboBox>
             <ComboBox x:Name="cbFilter" Width="200" SelectionChanged="cbChanged"/>
         </StackPanel>
-        <DockPanel  Grid.Row="1" Height="Auto"> 
-            <ListBox x:Name="lbMaterials" ItemTemplate="{StaticResource Materials}" SelectionChanged="lbMaterials_SelectionChanged"/>
+        <DockPanel  Grid.Row="1" Height="Auto">
+            <ListBox x:Name="lbMaterials" ItemTemplate="{StaticResource Materials}" MouseDoubleClick="lbMaterials_DoubleClick"/>
         </DockPanel>
+        <Button x:Name="btnAddMaterial" Content="Добавить" Grid.Row="2" HorizontalAlignment="Left" Click="btnAddMaterial_Click"/>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="2" HorizontalAlignment="Right">
             <TextBlock x:Name="tblPrev" Text="&lt;"/>
             <TextBlock x:Name="tblFirstPage"/>

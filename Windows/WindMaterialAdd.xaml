@@ -1,0 +1,66 @@
+﻿<Window x:Class="DemoExam5Var.WindMaterialAdd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoExam5Var"
+        mc:Ignorable="d"
+        Title="MaterialAdd" Height="450" Width="800">
+    <Window.Resources>
+        <DataTemplate x:Key="suppliers">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Title}" Tag="{Binding ID}"/>
+                <Button Content="X" Tag="{Binding ID}" Click="ButtonX_Click"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <ScrollViewer>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Width="790" HorizontalAlignment="Left">
+                    <StackPanel>
+                        <GroupBox Header="Название" Width="400">
+                            <TextBox x:Name="tbTitle"/>
+                        </GroupBox>
+                        <GroupBox Header="Тип материала">
+                            <ComboBox x:Name="cbMaterialType"/>
+                        </GroupBox>
+                        <GroupBox Header="Количество в упаковке">
+                            <TextBox x:Name="tbCountInPack" PreviewTextInput="tb_PreviewTextInput"/>
+                        </GroupBox>
+                        <GroupBox Header="Единица измерения">
+                            <TextBox x:Name="tbUnit" PreviewTextInput="tb_PreviewTextInput"/>
+                        </GroupBox>
+                        <GroupBox Header="Остаток на складе">
+                            <TextBox x:Name="tbCountInStock" PreviewTextInput="tb_PreviewTextInput"/>
+                        </GroupBox>
+                        <GroupBox Header="Минимальное количество">
+                            <TextBox x:Name="tbMinCount" PreviewTextInput="tb_PreviewTextInput"/>
+                        </GroupBox>
+                        <GroupBox Header="Описание">
+                            <TextBox x:Name="tbDescription"/>
+                        </GroupBox>
+                        <GroupBox Header="Стоимость">
+                            <TextBox x:Name="tbCost" PreviewTextInput="tb_PreviewTextInput"/>
+                        </GroupBox>
+                        <StackPanel Orientation="Horizontal">
+                            <GroupBox Header="Изображение" Width="340">
+                                <TextBox x:Name="tbImage"/>
+                            </GroupBox>
+                            <Button x:Name="btnAddImg" Content="Добавить" Height="25" VerticalAlignment="Center" Click="btnAddImg_Click"/>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <ListBox x:Name="lbSuppliers" Width="376" Height="340" VerticalAlignment="Center">
+                            
+                        </ListBox>
+                        <ComboBox x:Name="cbSuppliers" VerticalAlignment="Bottom"/>
+                        <Button x:Name="btnSupAdd" Content="Добавить" Click="btnSupAdd_Click"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button x:Name="btnSaveChanges" Content="Сохранить" Margin="0 10 0 0" Click="btnSaveChanges_Click"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

@@ -5,38 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoExam5Var"
         mc:Ignorable="d"
-        Title="WindMaterialRedact" Height="450" Width="800">
+        Title="WindMaterialRedact" Height="500" Width="800">
     <Grid>
-        <StackPanel>
-            <GroupBox Header="Название">
-                <TextBox x:Name="tbTitle"/>
-            </GroupBox>
-            <GroupBox Header="Тип материала">
-                <ComboBox x:Name="cbMaterialType" SelectedIndex="{Binding MaterialType.ID}"/>
-            </GroupBox>
-            <GroupBox Header="Количество в упаковке">
-                <TextBox x:Name="tbCountInPack"/>
-            </GroupBox>
-            <GroupBox Header="Единица измерения">
-                <TextBox x:Name="tbUnit"/>
-            </GroupBox>
-            <GroupBox Header="Остаток на складе">
-                <TextBox x:Name="tbCountInStock"/>
-            </GroupBox>
-            <GroupBox Header="Минимальное количество">
-                <TextBox x:Name="tbMinCount"/>
-            </GroupBox>
-            <GroupBox Header="Описание">
-                <TextBox x:Name="tbDescription"/>
-            </GroupBox>
-            <GroupBox Header="Стоимость">
-                <TextBox x:Name="tbCost"/>
-            </GroupBox>
-            <GroupBox Header="Изображение">
-                <TextBox x:Name="tbImage"/>
-            </GroupBox>
-            
-        </StackPanel>
-        
+        <ScrollViewer>
+            <StackPanel>
+                <GroupBox Header="Название">
+                    <TextBox x:Name="tbTitle"/>
+                </GroupBox>
+                <GroupBox Header="Тип материала">
+                    <ComboBox x:Name="cbMaterialType"/>
+                </GroupBox>
+                <GroupBox Header="Количество в упаковке">
+                    <TextBox x:Name="tbCountInPack" PreviewTextInput="tb_PreviewTextInput"/>
+                </GroupBox>
+                <GroupBox Header="Единица измерения">
+                    <TextBox x:Name="tbUnit" PreviewTextInput="tb_PreviewTextInput"/>
+                </GroupBox>
+                <GroupBox Header="Остаток на складе">
+                    <TextBox x:Name="tbCountInStock" PreviewTextInput="tb_PreviewTextInput"/>
+                </GroupBox>
+                <GroupBox Header="Минимальное количество">
+                    <TextBox x:Name="tbMinCount" PreviewTextInput="tb_PreviewTextInput"/>
+                </GroupBox>
+                <GroupBox Header="Описание">
+                    <TextBox x:Name="tbDescription"/>
+                </GroupBox>
+                <GroupBox Header="Стоимость">
+                    <TextBox x:Name="tbCost" PreviewTextInput="tb_PreviewTextInput"/>
+                </GroupBox>
+                <GroupBox Header="Изображение">
+                    <TextBox x:Name="tbImage"/>
+                </GroupBox>
+                <Button x:Name="btnSaveChanges" Content="Сохранить" Margin="0 10 0 0" Click="btnSaveChanges_Click"/>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

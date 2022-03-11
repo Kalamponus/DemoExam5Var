@@ -114,6 +114,9 @@
     <Compile Include="Supplier.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Windows\WindMaterialAdd.xaml.cs">
+      <DependentUpon>WindMaterialAdd.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WindMaterialRedact.xaml.cs">
       <DependentUpon>WindMaterialRedact.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\PgMaterialOutput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WindMaterialAdd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

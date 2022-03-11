@@ -91,17 +91,25 @@ namespace DemoExam5Var
             lbMaterials.ItemsSource = materials;
         }
 
-        private void lbMaterials_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void lbMaterials_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             if(lbMaterials.SelectedIndex != -1)
             {
-                Material item = e.AddedItems[0] as Material;
+                Material item = lbMaterials.SelectedItem as Material;
                 
                 WindMaterialRedact redact = new WindMaterialRedact(item.ID);
                 redact.ShowDialog();
                 lbMaterials.SelectedIndex = -1;
+                lbMaterials.Items.Refresh();
             }
             
+        }
+
+        private void btnAddMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            WindMaterialAdd windMaterialAdd = new WindMaterialAdd();
+            windMaterialAdd.Show();
+            lbMaterials.Items.Refresh();
         }
     }
 }
