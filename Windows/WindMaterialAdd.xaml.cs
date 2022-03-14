@@ -27,6 +27,8 @@ namespace DemoExam5Var
             InitializeComponent();          
             cbSuppliers.ItemsSource = DBConnection.materialEntities.Supplier.ToList();
             cbSuppliers.DisplayMemberPath = "Title";
+            cbMaterialType.ItemsSource = DBConnection.materialEntities.MaterialType.ToList();
+            cbMaterialType.DisplayMemberPath = "Title";
         }
         private void tb_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -39,17 +41,28 @@ namespace DemoExam5Var
         private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
         {
             Material material = new Material();
-            material.Title = tbTitle.Text;
-            material.MaterialTypeID = cbMaterialType.SelectedIndex + 1;
-            material.CountInPack = Convert.ToInt32(tbCountInPack.Text);
-            material.CountInStock = Convert.ToInt32(tbCountInStock.Text);
-            material.MinCount = Convert.ToInt32(tbMinCount.Text);
-            material.Description = tbDescription.Text;
-            material.Cost = Convert.ToDecimal(tbCost.Text);
-            material.Image = tbImage.Text;
-
-
+            try
+            {               
+                material.Title = tbTitle.Text;
+                material.MaterialTypeID = cbMaterialType.SelectedIndex + 1;
+                material.CountInPack = Convert.ToInt32(tbCountInPack.Text);
+                material.CountInStock = Convert.ToDouble(tbCountInStock.Text);
+                material.MinCount = Convert.ToDouble(tbMinCount.Text);
+                material.Description = tbDescription.Text;
+                material.Cost = Convert.ToDecimal(tbCost.Text);
+                material.Image = tbImg.Text;
+                material.Unit = tbUnit.Text;
+            }
+            catch
+            {
+                MessageBox.Show("Поля некорректно заполнены");                
+            }
             
+            foreach (Supplier supplier in lbSuppliers.Items)
+            {
+                material.Supplier.Add((Supplier)supplier);
+            }
+
             try
             {
                 DBConnection.materialEntities.Material.Add(material);
@@ -59,6 +72,7 @@ namespace DemoExam5Var
             {
                 MessageBox.Show("Не получилось добавить запись");
             }
+            
             
         }
 
@@ -70,18 +84,40 @@ namespace DemoExam5Var
             var result = openFileDialog.ShowDialog();
             if (result == true)
             {
-                tbImage.Text = openFileDialog.FileName;
+                tbImg.Text = openFileDialog.FileName;
             }
         }
 
         private void btnSupAdd_Click(object sender, RoutedEventArgs e)
         {
-            lbSuppliers.Items.Add(cbSuppliers.SelectedItem);
+            if(cbSuppliers.SelectedIndex != -1)
+            {
+                lbSuppliers.Items.Add(cbSuppliers.SelectedItem as Supplier);
+                cbSuppliers.SelectedIndex = -1;
+            }
+            else
+            {
+                MessageBox.Show("Выберите поставщика");
+            }
         }
 
         private void ButtonX_Click(object sender, RoutedEventArgs e)
         {
-            lbSuppliers.Items.Remove(DBConnection.materialEntities.Supplier.Where())
+            Button BTN = sender as Button;
+            int id = Convert.ToInt32(BTN.Tag);
+            Supplier supplier = DBConnection.materialEntities.Supplier.Where(x => x.ID == id).FirstOrDefault();
+            lbSuppliers.Items.Remove(supplier);
+            lbSuppliers.Items.Refresh();
+        }
+
+        private void tbImage_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            imgMater.Source = new BitmapImage(new Uri(tbImg.Text, UriKind.Relative));
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

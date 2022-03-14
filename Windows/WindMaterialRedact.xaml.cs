@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DemoExam5Var.Classes;
+using Microsoft.Win32;
 
 namespace DemoExam5Var
 {
@@ -26,16 +27,9 @@ namespace DemoExam5Var
         {
             InitializeComponent();
             material = DBConnection.materialEntities.Material.Where(x => x.ID == tag).FirstOrDefault();
-            List<MaterialType> materialTypes = DBConnection.materialEntities.MaterialType.ToList();
-
-            List<string> typeTitle = new List<string>();
-            foreach (var type in materialTypes)
-            {
-                typeTitle.Add(type.Title);
-            }
-
-            cbMaterialType.ItemsSource = typeTitle;
-            cbMaterialType.SelectedItem = material.MaterialType.Title;
+            cbMaterialType.ItemsSource = DBConnection.materialEntities.MaterialType.ToList();
+            cbMaterialType.DisplayMemberPath = "Title";
+            cbMaterialType.SelectedItem = material.MaterialType;
 
             tbTitle.Text = material.Title;
             tbCountInPack.Text = material.CountInPack.ToString();
@@ -45,22 +39,45 @@ namespace DemoExam5Var
             tbDescription.Text = material.Description.ToString();
             tbCost.Text = material.Cost.ToString();
             tbImage.Text = material.Image.ToString();
+            imgMaterial.Source = new BitmapImage(new Uri(tbImage.Text, UriKind.Relative));
         }
 
         private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            
-            material.Title = tbTitle.Text;
-            material.MaterialTypeID = cbMaterialType.SelectedIndex + 1;
-            material.CountInPack = Convert.ToInt32(tbCountInPack.Text);
-            material.CountInStock = Convert.ToInt32(tbCountInStock.Text);
-            material.MinCount = Convert.ToInt32(tbMinCount.Text);
-            material.Description = tbDescription.Text;
-            material.Cost = Convert.ToDecimal(tbCost.Text);
-            material.Image = tbImage.Text;
+            try
+            {
+                material.Title = tbTitle.Text;
+                material.MaterialTypeID = cbMaterialType.SelectedIndex + 1;
+                material.CountInPack = Convert.ToInt32(tbCountInPack.Text);
+                material.CountInStock = Convert.ToDouble(tbCountInStock.Text);
+                material.MinCount = Convert.ToDouble(tbMinCount.Text);
+                material.Description = tbDescription.Text;
+                material.Cost = Convert.ToDecimal(tbCost.Text);
+                material.Image = tbImage.Text;
+            }
+            catch
+            {
+                MessageBox.Show("Поля некорректно заполнены");
+            }
+            if(lbSuppliers.Items.Count > 0)
+            {
+                foreach (Supplier supplier in lbSuppliers.Items)
+                {
+                    if (!material.Supplier.Contains(supplier))
+                    {
+                        material.Supplier.Add((Supplier)supplier);
+                    }
+                }                
+            }            
+            try
+            {
+                DBConnection.materialEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("Не получилось добавить запись");
+            }
 
-            DBConnection.materialEntities.SaveChanges();
-            
         }
 
         private void tb_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -70,6 +87,66 @@ namespace DemoExam5Var
             {
                 e.Handled = true;
             }
+        }
+        private void btnAddImg_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.DefaultExt = ".jpg";
+            openFileDialog.Filter = "Изображения |*.jpg;*.png";
+            var result = openFileDialog.ShowDialog();
+            if (result == true)
+            {
+                tbImage.Text = openFileDialog.FileName;
+            }
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult rsltMessageBox = MessageBox.Show("Вы уверены, что хотите удалить данный материал?", "Удаление материала", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (rsltMessageBox == MessageBoxResult.Yes)
+                try
+                {                   
+                    DBConnection.materialEntities.Material.Remove(material);                    
+                    DBConnection.materialEntities.SaveChanges();
+                    MessageBox.Show("Материал был успешно удален!");
+                    Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Не удалось удалить материал!");
+                }
+        }
+
+        private void btnSupAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbSuppliers.SelectedIndex != -1)
+            {
+                lbSuppliers.Items.Add(cbSuppliers.SelectedItem as Supplier);
+                cbSuppliers.SelectedIndex = -1;
+            }
+            else
+            {
+                MessageBox.Show("Выберите поставщика");
+            }
+        }
+
+        private void ButtonX_Click(object sender, RoutedEventArgs e)
+        {
+            Button BTN = sender as Button;
+            int id = Convert.ToInt32(BTN.Tag);
+            Supplier supplier = DBConnection.materialEntities.Supplier.Where(x => x.ID == id).FirstOrDefault();
+            lbSuppliers.Items.Remove(supplier);
+            lbSuppliers.Items.Refresh();
+        }
+
+        private void tbImage_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            imgMaterial.Source = new BitmapImage(new Uri(tbImage.Text, UriKind.Relative));
         }
     }
 }

@@ -14,7 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DemoExam5Var.Classes;
 
-
 namespace DemoExam5Var
 {
     /// <summary>
@@ -22,12 +21,13 @@ namespace DemoExam5Var
     /// </summary>
     public partial class PgMaterialOutput : Page
     {
-        List<Material> materials = DBConnection.materialEntities.Material.ToList();
+        Pagination pagination = new Pagination();
+        List<Material> materials;
+        
         public PgMaterialOutput()
         {
-            InitializeComponent();                       
-            lbMaterials.ItemsSource = materials;
-
+            InitializeComponent();
+            lbMaterials.ItemsSource = DBConnection.materialEntities.Material.ToList(); ;           
             cbFilter.Items.Add("Все типы");
             foreach(var type in DBConnection.materialEntities.MaterialType)
             {
@@ -35,6 +35,7 @@ namespace DemoExam5Var
             }
             cbFilter.SelectedIndex = 0;
             cbSort.SelectedIndex = 0;
+            DataContext = pagination;
         }
 
         public void cbChanged(object sender, SelectionChangedEventArgs e)
@@ -50,7 +51,7 @@ namespace DemoExam5Var
         }
         public void Filters()
         {
-
+            
             if (tbSearch.Text.Length > 0)
             {
                 materials = DBConnection.materialEntities.Material.Where(x => x.Title.Contains(tbSearch.Text)).ToList();
@@ -58,7 +59,7 @@ namespace DemoExam5Var
 
             if (cbFilter.SelectedIndex != 0)
             {
-                materials = materials.Where(x => x.MaterialType.Title == cbFilter.SelectedItem.ToString()).ToList();
+                materials = DBConnection.materialEntities.Material.Where(x => x.MaterialType.Title == cbFilter.SelectedItem.ToString()).ToList();
             }
             else
             {
@@ -89,6 +90,7 @@ namespace DemoExam5Var
                     break;
             }
             lbMaterials.ItemsSource = materials;
+            
         }
 
         private void lbMaterials_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -108,8 +110,59 @@ namespace DemoExam5Var
         private void btnAddMaterial_Click(object sender, RoutedEventArgs e)
         {
             WindMaterialAdd windMaterialAdd = new WindMaterialAdd();
-            windMaterialAdd.Show();
+            windMaterialAdd.ShowDialog();
             lbMaterials.Items.Refresh();
         }
+
+        private void btnMinCount_Click(object sender, RoutedEventArgs e)
+        {
+
+            List<int> itemsID = new List<int>();
+            foreach (Material item in lbMaterials.SelectedItems)
+            {
+                itemsID.Add(item.ID);
+            }
+
+            WindMinCount windMinCount = new WindMinCount(itemsID);
+            windMinCount.ShowDialog();
+            lbMaterials.SelectedIndex = -1;
+            lbMaterials.Items.Refresh();
+        }
+
+        private void lbMaterials_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(lbMaterials.SelectedItems.Count >= 2)
+            {
+                btnMinCount.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                btnMinCount.Visibility = Visibility.Hidden;
+            }
+        }
+        private void GoPage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock tb = (TextBlock)sender;
+
+            switch (tb.Uid)
+            {
+                case "prev":                    
+                    pagination.CurrentPage--;
+                    break;
+                case "next":
+                    pagination.CurrentPage++;                    
+                    break;
+                default:
+                    pagination.CurrentPage = Convert.ToInt32(tb.Text);
+                    break;
+            }
+            Filters();
+            pagination.CountPage = 15;
+            pagination.Countlist = materials.Count;
+            lbMaterials.ItemsSource = materials.Skip(pagination.CurrentPage * pagination.CountPage - pagination.CountPage).Take(pagination.CountPage).ToList();
+            tblOnPage.Text = "Выведено: " + lbMaterials.Items.Count + " из " + materials.Count();
+        }
+
+
     }
 }

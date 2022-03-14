@@ -34,5 +34,21 @@ namespace DemoExam5Var
         {
             get => Image == "" ? @"\materials\picture.png" : Image;
         }
+
+        public string EnoughMaterial
+        {
+            get
+            {
+                if (CountInStock < MinCount)
+                {
+                    return "#f19292";
+                }
+                else if (CountInStock >= MinCount * 3) return "#ffba01";
+                else
+                {
+                    return "#ffffff";
+                }
+            }
+        }
     }
 }

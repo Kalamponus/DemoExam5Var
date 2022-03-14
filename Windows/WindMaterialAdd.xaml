@@ -5,19 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoExam5Var"
         mc:Ignorable="d"
-        Title="MaterialAdd" Height="450" Width="800">
+        Title="MaterialAdd" Height="580" Width="1150">
     <Window.Resources>
         <DataTemplate x:Key="suppliers">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel >
                 <TextBlock Text="{Binding Title}" Tag="{Binding ID}"/>
-                <Button Content="X" Tag="{Binding ID}" Click="ButtonX_Click"/>
+                <Button Content="X" Tag="{Binding ID}" Click="ButtonX_Click" Margin="10 0 0 0"/>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
     <Grid>
         <ScrollViewer>
             <StackPanel>
-                <StackPanel Orientation="Horizontal" Width="790" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal" Width="1150" HorizontalAlignment="Left">
+                    <StackPanel Width="340">
+                        <Border Height="360" BorderThickness="2" BorderBrush="Black">
+                            <Image x:Name="imgMater" Height="350" Width="300"/>
+                        </Border>
+                        <StackPanel Orientation="Horizontal">
+                            <GroupBox Header="Изображение" Width="240">
+                                <TextBox x:Name="tbImg" TextChanged="tbImage_TextChanged"/>
+                            </GroupBox>
+                            <Button x:Name="btnAddImg" Content="Добавить" Height="25" VerticalAlignment="Center" Click="btnAddImg_Click"/>
+                        </StackPanel>
+                    </StackPanel>
                     <StackPanel>
                         <GroupBox Header="Название" Width="400">
                             <TextBox x:Name="tbTitle"/>
@@ -29,7 +40,7 @@
                             <TextBox x:Name="tbCountInPack" PreviewTextInput="tb_PreviewTextInput"/>
                         </GroupBox>
                         <GroupBox Header="Единица измерения">
-                            <TextBox x:Name="tbUnit" PreviewTextInput="tb_PreviewTextInput"/>
+                            <TextBox x:Name="tbUnit"/>
                         </GroupBox>
                         <GroupBox Header="Остаток на складе">
                             <TextBox x:Name="tbCountInStock" PreviewTextInput="tb_PreviewTextInput"/>
@@ -38,28 +49,22 @@
                             <TextBox x:Name="tbMinCount" PreviewTextInput="tb_PreviewTextInput"/>
                         </GroupBox>
                         <GroupBox Header="Описание">
-                            <TextBox x:Name="tbDescription"/>
+                            <TextBox x:Name="tbDescription" Height="73"/>
                         </GroupBox>
                         <GroupBox Header="Стоимость">
                             <TextBox x:Name="tbCost" PreviewTextInput="tb_PreviewTextInput"/>
                         </GroupBox>
-                        <StackPanel Orientation="Horizontal">
-                            <GroupBox Header="Изображение" Width="340">
-                                <TextBox x:Name="tbImage"/>
-                            </GroupBox>
-                            <Button x:Name="btnAddImg" Content="Добавить" Height="25" VerticalAlignment="Center" Click="btnAddImg_Click"/>
-                        </StackPanel>
-                        
+
+                        <Button x:Name="btnSaveChanges" Content="Сохранить" Margin="0 10 0 0" Click="btnSaveChanges_Click"/>
+                        <Button x:Name="btnBack" Content="Отмена"  Margin="0 10" Click="btnBack_Click"/>
                     </StackPanel>
-                    <StackPanel Orientation="Vertical">
-                        <ListBox x:Name="lbSuppliers" Width="376" Height="340" VerticalAlignment="Center">
-                            
-                        </ListBox>
+                    <StackPanel Orientation="Vertical" Margin="10 0 0 0" Width="365">
+                        <ListBox x:Name="lbSuppliers" Height="340" VerticalAlignment="Center" ItemTemplate="{StaticResource suppliers}"/>
                         <ComboBox x:Name="cbSuppliers" VerticalAlignment="Bottom"/>
                         <Button x:Name="btnSupAdd" Content="Добавить" Click="btnSupAdd_Click"/>
                     </StackPanel>
                 </StackPanel>
-                <Button x:Name="btnSaveChanges" Content="Сохранить" Margin="0 10 0 0" Click="btnSaveChanges_Click"/>
+                
             </StackPanel>
         </ScrollViewer>
     </Grid>
