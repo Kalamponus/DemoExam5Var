@@ -26,8 +26,7 @@ namespace DemoExam5Var
         
         public PgMaterialOutput()
         {
-            InitializeComponent();
-            lbMaterials.ItemsSource = DBConnection.materialEntities.Material.ToList(); ;           
+            InitializeComponent();         
             cbFilter.Items.Add("Все типы");
             foreach(var type in DBConnection.materialEntities.MaterialType)
             {
@@ -36,6 +35,7 @@ namespace DemoExam5Var
             cbFilter.SelectedIndex = 0;
             cbSort.SelectedIndex = 0;
             DataContext = pagination;
+            DisplayOnPage();
         }
 
         public void cbChanged(object sender, SelectionChangedEventArgs e)
@@ -89,8 +89,7 @@ namespace DemoExam5Var
                 default:
                     break;
             }
-            lbMaterials.ItemsSource = materials;
-            
+            DisplayOnPage();            
         }
 
         private void lbMaterials_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -140,6 +139,13 @@ namespace DemoExam5Var
                 btnMinCount.Visibility = Visibility.Hidden;
             }
         }
+        private void DisplayOnPage()
+        {
+            pagination.CountPage = 15;
+            pagination.Countlist = materials.Count;
+            lbMaterials.ItemsSource = materials.Skip(pagination.CurrentPage * pagination.CountPage - pagination.CountPage).Take(pagination.CountPage).ToList();
+            tblOnPage.Text = "Выведено: " + lbMaterials.Items.Count + " из " + materials.Count();
+        }
         private void GoPage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             TextBlock tb = (TextBlock)sender;
@@ -157,10 +163,7 @@ namespace DemoExam5Var
                     break;
             }
             Filters();
-            pagination.CountPage = 15;
-            pagination.Countlist = materials.Count;
-            lbMaterials.ItemsSource = materials.Skip(pagination.CurrentPage * pagination.CountPage - pagination.CountPage).Take(pagination.CountPage).ToList();
-            tblOnPage.Text = "Выведено: " + lbMaterials.Items.Count + " из " + materials.Count();
+            DisplayOnPage();
         }
 
 

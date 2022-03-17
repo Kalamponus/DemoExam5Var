@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoExam5Var"
         mc:Ignorable="d"
-        Title="WindMinCount" Height="150" Width="350">
+        Title="Изменение количества" Height="150" Width="350">
     <Grid>
         <StackPanel>
             <GroupBox Header="Новое минимальное количество">

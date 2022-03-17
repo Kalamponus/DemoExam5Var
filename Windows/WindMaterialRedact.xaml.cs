@@ -30,6 +30,10 @@ namespace DemoExam5Var
             cbMaterialType.ItemsSource = DBConnection.materialEntities.MaterialType.ToList();
             cbMaterialType.DisplayMemberPath = "Title";
             cbMaterialType.SelectedItem = material.MaterialType;
+            cbSuppliers.ItemsSource = DBConnection.materialEntities.Supplier.ToList();
+            cbSuppliers.DisplayMemberPath = "Title";
+
+            lbSuppliers.ItemsSource = material.Supplier.ToList();
 
             tbTitle.Text = material.Title;
             tbCountInPack.Text = material.CountInPack.ToString();
@@ -41,43 +45,49 @@ namespace DemoExam5Var
             tbImage.Text = material.Image.ToString();
             imgMaterial.Source = new BitmapImage(new Uri(tbImage.Text, UriKind.Relative));
         }
-
+        private bool tbValidation()
+        {
+            return tbCost.Text.Length > 0 && tbCountInPack.Text.Length > 0 && tbCountInStock.Text.Length > 0 && tbDescription.Text.Length > 0 && tbMinCount.Text.Length > 0 && tbTitle.Text.Length > 0 && tbUnit.Text.Length > 0;
+        }
         private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (tbValidation())
             {
-                material.Title = tbTitle.Text;
-                material.MaterialTypeID = cbMaterialType.SelectedIndex + 1;
-                material.CountInPack = Convert.ToInt32(tbCountInPack.Text);
-                material.CountInStock = Convert.ToDouble(tbCountInStock.Text);
-                material.MinCount = Convert.ToDouble(tbMinCount.Text);
-                material.Description = tbDescription.Text;
-                material.Cost = Convert.ToDecimal(tbCost.Text);
-                material.Image = tbImage.Text;
-            }
-            catch
-            {
-                MessageBox.Show("Поля некорректно заполнены");
-            }
-            if(lbSuppliers.Items.Count > 0)
-            {
-                foreach (Supplier supplier in lbSuppliers.Items)
+                try
                 {
-                    if (!material.Supplier.Contains(supplier))
+                    material.Title = tbTitle.Text;
+                    material.MaterialTypeID = cbMaterialType.SelectedIndex + 1;
+                    material.CountInPack = Convert.ToInt32(tbCountInPack.Text);
+                    material.CountInStock = Convert.ToDouble(tbCountInStock.Text);
+                    material.MinCount = Convert.ToDouble(tbMinCount.Text);
+                    material.Description = tbDescription.Text;
+                    material.Cost = Convert.ToDecimal(tbCost.Text);
+                    material.Image = tbImage.Text;
+                }
+                catch
+                {
+                    MessageBox.Show("Поля некорректно заполнены");
+                }
+                if (lbSuppliers.Items.Count > 0)
+                {
+                    foreach (Supplier supplier in lbSuppliers.Items)
                     {
-                        material.Supplier.Add((Supplier)supplier);
+                        if (!material.Supplier.Contains(supplier))
+                        {
+                            material.Supplier.Add((Supplier)supplier);
+                        }
                     }
-                }                
-            }            
-            try
-            {
-                DBConnection.materialEntities.SaveChanges();
+                }
+                try
+                {
+                    DBConnection.materialEntities.SaveChanges();
+                    this.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Не получилось добавить запись");
+                }
             }
-            catch
-            {
-                MessageBox.Show("Не получилось добавить запись");
-            }
-
         }
 
         private void tb_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -124,9 +134,10 @@ namespace DemoExam5Var
 
         private void btnSupAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (cbSuppliers.SelectedIndex != -1)
+            if (cbSuppliers.SelectedIndex != -1 && !material.Supplier.Contains(cbSuppliers.SelectedItem as Supplier))
             {
-                lbSuppliers.Items.Add(cbSuppliers.SelectedItem as Supplier);
+                material.Supplier.Add(cbSuppliers.SelectedItem as Supplier);
+                lbSuppliers.ItemsSource = material.Supplier.ToList();
                 cbSuppliers.SelectedIndex = -1;
             }
             else
@@ -140,8 +151,9 @@ namespace DemoExam5Var
             Button BTN = sender as Button;
             int id = Convert.ToInt32(BTN.Tag);
             Supplier supplier = DBConnection.materialEntities.Supplier.Where(x => x.ID == id).FirstOrDefault();
-            lbSuppliers.Items.Remove(supplier);
-            lbSuppliers.Items.Refresh();
+            material.Supplier.Remove(supplier);
+            lbSuppliers.ItemsSource = material.Supplier.ToList();
+            
         }
 
         private void tbImage_TextChanged(object sender, TextChangedEventArgs e)

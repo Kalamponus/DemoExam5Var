@@ -38,42 +38,53 @@ namespace DemoExam5Var
                 e.Handled = true;
             }
         }
+        private bool tbValidation()
+        {
+            return tbCost.Text.Length > 0 && tbCountInPack.Text.Length > 0 && tbCountInStock.Text.Length > 0 && tbDescription.Text.Length > 0 && tbMinCount.Text.Length > 0 && tbTitle.Text.Length > 0 && tbUnit.Text.Length > 0;
+        }
         private void btnSaveChanges_Click(object sender, RoutedEventArgs e)
         {
             Material material = new Material();
-            try
-            {               
-                material.Title = tbTitle.Text;
-                material.MaterialTypeID = cbMaterialType.SelectedIndex + 1;
-                material.CountInPack = Convert.ToInt32(tbCountInPack.Text);
-                material.CountInStock = Convert.ToDouble(tbCountInStock.Text);
-                material.MinCount = Convert.ToDouble(tbMinCount.Text);
-                material.Description = tbDescription.Text;
-                material.Cost = Convert.ToDecimal(tbCost.Text);
-                material.Image = tbImg.Text;
-                material.Unit = tbUnit.Text;
-            }
-            catch
+            if (tbValidation())
             {
-                MessageBox.Show("Поля некорректно заполнены");                
-            }
-            
-            foreach (Supplier supplier in lbSuppliers.Items)
-            {
-                material.Supplier.Add((Supplier)supplier);
-            }
+                try
+                {
+                    material.Title = tbTitle.Text;
+                    material.MaterialTypeID = cbMaterialType.SelectedIndex + 1;
+                    material.CountInPack = Convert.ToInt32(tbCountInPack.Text);
+                    material.CountInStock = Convert.ToDouble(tbCountInStock.Text);
+                    material.MinCount = Convert.ToDouble(tbMinCount.Text);
+                    material.Description = tbDescription.Text;
+                    material.Cost = Convert.ToDecimal(tbCost.Text);
+                    material.Image = tbImg.Text;
+                    material.Unit = tbUnit.Text;
+                }
+                catch
+                {
+                    MessageBox.Show("Поля некорректно заполнены");
+                }
 
-            try
-            {
-                DBConnection.materialEntities.Material.Add(material);
-                DBConnection.materialEntities.SaveChanges();
+                foreach (Supplier supplier in lbSuppliers.Items)
+                {
+                    material.Supplier.Add((Supplier)supplier);
+                }
+
+                try
+                {
+                    DBConnection.materialEntities.Material.Add(material);
+                    DBConnection.materialEntities.SaveChanges();
+                    this.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Не получилось добавить запись");
+                }
+
             }
-            catch
+            else
             {
-                MessageBox.Show("Не получилось добавить запись");
+                MessageBox.Show("Имеются незаполненные поля");
             }
-            
-            
         }
 
         private void btnAddImg_Click(object sender, RoutedEventArgs e)
@@ -90,7 +101,7 @@ namespace DemoExam5Var
 
         private void btnSupAdd_Click(object sender, RoutedEventArgs e)
         {
-            if(cbSuppliers.SelectedIndex != -1)
+            if(cbSuppliers.SelectedIndex != -1 && !lbSuppliers.Items.Contains(cbSuppliers.SelectedItem as Supplier))
             {
                 lbSuppliers.Items.Add(cbSuppliers.SelectedItem as Supplier);
                 cbSuppliers.SelectedIndex = -1;

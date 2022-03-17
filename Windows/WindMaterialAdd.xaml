@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoExam5Var"
         mc:Ignorable="d"
-        Title="MaterialAdd" Height="580" Width="1150">
+        Title="Добавление материала" Height="580" Width="1150">
     <Window.Resources>
         <DataTemplate x:Key="suppliers">
-            <StackPanel >
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Title}" Tag="{Binding ID}"/>
                 <Button Content="X" Tag="{Binding ID}" Click="ButtonX_Click" Margin="10 0 0 0"/>
             </StackPanel>
@@ -49,7 +49,7 @@
                             <TextBox x:Name="tbMinCount" PreviewTextInput="tb_PreviewTextInput"/>
                         </GroupBox>
                         <GroupBox Header="Описание">
-                            <TextBox x:Name="tbDescription" Height="73"/>
+                            <TextBox x:Name="tbDescription" Height="73" TextWrapping="Wrap" AcceptsReturn="True"/>
                         </GroupBox>
                         <GroupBox Header="Стоимость">
                             <TextBox x:Name="tbCost" PreviewTextInput="tb_PreviewTextInput"/>
