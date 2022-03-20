@@ -12,6 +12,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Image Source="/Img/Черновик.png" Height="70" Width="70" HorizontalAlignment="Left" Grid.Row="0"/>
+        <TextBlock Text="Черновик" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
         <Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"  Grid.Row="1"/>
     </Grid>
 </Window>
