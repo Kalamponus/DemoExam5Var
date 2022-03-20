@@ -51,9 +51,11 @@
             </ComboBox>
             <ComboBox x:Name="cbFilter" Width="200" SelectionChanged="cbChanged"/>
         </StackPanel>
-        <StackPanel  Grid.Row="1">
-            <ListBox x:Name="lbMaterials" ItemTemplate="{StaticResource Materials}" MouseDoubleClick="lbMaterials_DoubleClick" SelectionMode="Multiple" SelectionChanged="lbMaterials_SelectionChanged" Height="350"/>
-        </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel  Grid.Row="1">
+                <ListBox x:Name="lbMaterials" ItemTemplate="{StaticResource Materials}" MouseDoubleClick="lbMaterials_DoubleClick" SelectionMode="Multiple" SelectionChanged="lbMaterials_SelectionChanged" Height="Auto"/>
+            </StackPanel>
+        </ScrollViewer>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Background="#FEA9AB">
             <StackPanel Orientation="Horizontal">
